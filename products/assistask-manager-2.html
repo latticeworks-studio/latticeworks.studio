@@ -328,68 +328,19 @@ nav {
   display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
 }
 
-/* ── PRICING ── */
-.pricing-section {
+/* ── DOWNLOAD STRIP ── */
+.download-strip {
   position: relative; z-index: 1;
   padding: 0 48px 120px;
-  max-width: 700px; margin: 0 auto;
+  max-width: 600px; margin: 0 auto;
   text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
 }
 
-.pricing-box {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(232,137,15,0.25);
-  padding: 56px 48px;
-  position: relative;
-  overflow: hidden;
-}
-
-.pricing-box::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--amber);
-}
-
-.pricing-tag {
+.download-meta {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 11px; letter-spacing: 0.35em;
-  color: var(--amber); text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.pricing-price {
-  font-family: 'Bakbak One', sans-serif;
-  font-size: 64px; letter-spacing: 0.04em;
-  color: #fff; line-height: 1;
-  margin-bottom: 8px;
-}
-
-.pricing-price span {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 22px; color: var(--muted);
-  vertical-align: super;
-}
-
-.pricing-note {
-  font-size: 13px; color: var(--muted);
-  margin-bottom: 36px; line-height: 1.6;
-}
-
-.pricing-features {
-  list-style: none;
-  text-align: left;
-  margin-bottom: 40px;
-  display: flex; flex-direction: column; gap: 10px;
-}
-
-.pricing-features li {
-  font-size: 14px; color: var(--muted);
-  display: flex; align-items: center; gap: 12px;
-  font-weight: 300;
-}
-
-.pricing-features li::before {
-  content: '—'; color: var(--amber); font-weight: 700; flex-shrink: 0;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
 }
 
 /* ── FOOTER ── */
@@ -416,13 +367,12 @@ footer a:hover { color: var(--amber); }
   .how-example { flex-direction: column; gap: 16px; }
   .how-arrow { transform: rotate(90deg); padding: 0; align-self: center; }
   nav { padding: 16px 24px; }
-  .section, .how-section, .pricing-section { padding-left: 24px; padding-right: 24px; }
+  .section, .how-section, .download-strip { padding-left: 24px; padding-right: 24px; }
 }
 
 @media (max-width: 600px) {
   .features-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 18px; }
-  .pricing-box { padding: 36px 24px; }
 }
 </style>
 
@@ -499,7 +449,7 @@ footer a:hover { color: var(--amber); }
       Type your task the way you'd say it out loud. Assistask figures out the priority and due date automatically — no forms, no second pass, no friction.
     </p>
     <div class="hero-cta">
-      <a href="#download" class="btn-primary">Download Free →</a>
+      <a href="https://github.com/latticeworks-studio/AssistaskManager-v2/releases/latest" class="btn-primary download-btn">Download Free →</a>
       <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
   </div>
@@ -549,8 +499,8 @@ footer a:hover { color: var(--amber); }
 
     <div class="feature-card">
       <div class="feature-icon">💸</div>
-      <div class="feature-name">Own it, no subscription</div>
-      <div class="feature-desc">Pay once, keep it forever. No monthly billing because you're not using this eight hours a day — and that's perfectly fine.</div>
+      <div class="feature-name">Free and open source</div>
+      <div class="feature-desc">No trial, no paywall, no subscription — ever. Just download it, use it, and keep it. No catch.</div>
     </div>
 
   </div>
@@ -606,27 +556,13 @@ footer a:hover { color: var(--amber); }
   </div>
 </section>
 
-<!-- PRICING / DOWNLOAD -->
-<section id="download" class="pricing-section">
-  <div class="section-label" style="justify-content:center; margin-bottom:48px;">
-    Get It
-  </div>
-  <div class="pricing-box">
-    <div class="pricing-tag">Free — Forever</div>
-    <div class="pricing-price">$0</div>
-    <div class="pricing-note">No catch. No trial period. No "free tier" with a paywall behind it.<br>Just free.</div>
-    <ul class="pricing-features">
-      <li>Natural language task parsing</li>
-      <li>Auto-priority &amp; due date detection</li>
-      <li>Always-on-top quick-capture window</li>
-      <li>2 customizable timezone clocks</li>
-      <li>Task summary at a glance</li>
-      <li>All future updates included</li>
-    </ul>
-    <a id="download-btn" href="https://github.com/latticeworks-studio/AssistaskManager-v2/releases/latest" class="btn-primary" style="width:100%; justify-content:center; font-size:14px; padding:16px;">
-      Download Assistask Manager 2 →
-    </a>
-  </div>
+<!-- DOWNLOAD -->
+<section id="download" class="download-strip">
+  <div class="section-label" style="justify-content:center;">Get It</div>
+  <a id="download-btn" href="https://github.com/latticeworks-studio/AssistaskManager-v2/releases/latest" class="btn-primary download-btn" style="font-size:14px; padding:16px 40px;">
+    Download Assistask Manager 2 →
+  </a>
+  <p class="download-meta">Windows 10 / 11 &nbsp;·&nbsp; 64-bit &nbsp;·&nbsp; Free forever &nbsp;·&nbsp; Open source</p>
 </section>
 
 <footer>
@@ -639,9 +575,11 @@ footer a:hover { color: var(--amber); }
     .then(data => {
       const msi = data.assets && data.assets.find(a => a.name.endsWith('.msi'));
       if (msi) {
-        const btn = document.getElementById('download-btn');
-        btn.href = msi.browser_download_url;
-        btn.textContent = `Download Assistask Manager 2 (${data.tag_name}) →`;
+        document.querySelectorAll('.download-btn').forEach(btn => {
+          btn.href = msi.browser_download_url;
+        });
+        const bottom = document.getElementById('download-btn');
+        if (bottom) bottom.textContent = `Download Assistask Manager 2 (${data.tag_name}) →`;
       }
     })
     .catch(() => {});
