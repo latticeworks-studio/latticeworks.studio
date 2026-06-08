@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:  #0d1b35;
+  --amber: #e8890f;
+  --muted: rgba(255,255,255,0.45);
+  --grid:  rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(13,27,53,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 14px; text-decoration: none;
+}
+
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+/* ── CONTENT ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto;
+  padding: 160px 48px 120px;
+}
+
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--amber); }
+
+h1 {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(36px, 6vw, 56px);
+  letter-spacing: 0.06em; line-height: 1.05; color: #fff;
+  margin-bottom: 48px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.manifesto {
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.manifesto p {
+  font-size: 16px; font-weight: 300; line-height: 1.85;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.manifesto p strong {
+  color: #fff; font-weight: 600;
+}
+
+.manifesto p.lead {
+  font-size: 19px; line-height: 1.7;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 32px;
+}
+
+.divider {
+  width: 48px; height: 2px;
+  background: var(--amber);
+  margin: 48px 0;
+}
+
+.philosophy-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; margin-top: 48px;
+  animation: fadeUp 0.7s 0.35s ease both;
+}
+
+.phil-card {
+  padding: 28px 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.phil-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.phil-body {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+footer a { color: rgba(255,255,255,0.25); text-decoration: none; }
+footer a:hover { color: var(--amber); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 16px 24px; }
+  .page { padding: 120px 24px 80px; }
+  .philosophy-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 18px; }
+}
+</style>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<!-- ── OPEN GRAPH / SOCIAL ── -->
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="About — LatticeWorks Studio">
+<meta property="og:description"  content="LatticeWorks Studio makes apps for the in-between people. Not pros, not beginners. Just people who like to make and tinker.">
+<meta property="og:url"          content="https://latticeworks.studio/about.html">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="About — LatticeWorks Studio">
+<meta name="twitter:description" content="LatticeWorks Studio makes apps for the in-between people. Not pros, not beginners. Just people who like to make and tinker.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="LatticeWorks Studio makes apps for the in-between people. Not pros, not beginners. Just people who like to make and tinker.">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+      </g>
+    </svg>
+    <div class="nav-brand">
+      LATTICEWORKS
+      <span>S T U D I O</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="docs/index.html">Docs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <div class="eyebrow">The Studio</div>
+  <h1>Apps for the in-between.</h1>
+
+  <div class="manifesto">
+    <p class="lead">
+      LatticeWorks Studio exists because the app I needed didn't. So I built it. And then I built another one. And figured — if it's useful to me, maybe it's useful to you too.
+    </p>
+
+    <p>
+      There's a specific kind of person that app stores aren't designed for. You're not a <strong>professional</strong> — you don't need enterprise features, seat-based pricing, or audit logs. But you're not a <strong>beginner</strong> either — you've outgrown the apps that treat you like you've never used a computer before.
+    </p>
+
+    <p>
+      You're in the middle. You want tools with some depth. You want to tinker. You want to actually <strong>own</strong> what you paid for — not rent it indefinitely. You're not going to use a task manager eight hours a day, so you're not going to pay $12 a month for one.
+    </p>
+
+    <div class="divider"></div>
+
+    <p>
+      Every app at LatticeWorks Studio starts with a real problem I had. A gap between "this is way too basic" and "I don't need all that." I build the thing that fits in that gap — with enough power to be genuinely useful, and enough restraint to stay out of the way.
+    </p>
+
+    <p>
+      No VC funding. No growth targets. No dark patterns. Just <strong>well-made tools</strong> for people who like making and tinkering — built by someone exactly like that.
+    </p>
+  </div>
+
+  <div class="philosophy-grid">
+    <div class="phil-card">
+      <div class="phil-title">Pay once</div>
+      <div class="phil-body">No subscriptions. No annual renewals. You buy it, you own it. Forever. Simple as that.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-title">Built for tinkerers</div>
+      <div class="phil-body">Enough depth to do real things. Enough simplicity that you don't need a manual to get started.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-title">Honest software</div>
+      <div class="phil-body">No dark patterns, no fake urgency, no "limited time" badges. If it's good, it's good on its own.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-title">Made for me</div>
+      <div class="phil-body">Every app solves a problem I actually had. That means it's been tested by someone who genuinely cares if it works.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="products/assistask-manager-2.html">Assistask Manager 2</a> &nbsp;·&nbsp; <a href="contact.html">Contact</a></p>
+</footer>
+
+</body>
+</html>

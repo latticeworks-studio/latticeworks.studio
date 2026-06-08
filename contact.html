@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:  #0d1b35;
+  --amber: #e8890f;
+  --muted: rgba(255,255,255,0.45);
+  --grid:  rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(13,27,53,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+/* ── CONTENT ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 680px; margin: 0 auto;
+  padding: 160px 48px 120px;
+}
+
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--amber); }
+
+h1 {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(36px, 6vw, 52px);
+  letter-spacing: 0.06em; line-height: 1.05; color: #fff;
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.intro {
+  font-size: 15px; font-weight: 300; line-height: 1.8;
+  color: var(--muted); margin-bottom: 52px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+/* ── FORM ── */
+.contact-form {
+  display: flex; flex-direction: column; gap: 20px;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+
+.field { display: flex; flex-direction: column; gap: 8px; }
+
+.field label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.35); text-transform: uppercase;
+}
+
+.field input,
+.field textarea,
+.field select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px; font-weight: 300;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: rgba(232,137,15,0.5);
+  background: rgba(232,137,15,0.04);
+}
+
+.field textarea { resize: vertical; min-height: 140px; }
+
+.field select option { background: #0d1b35; color: #fff; }
+
+.btn-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--amber); color: var(--navy);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase; border: none; cursor: pointer;
+  padding: 16px 32px; margin-top: 8px;
+  transition: opacity 0.2s, transform 0.2s;
+  width: 100%;
+}
+
+.btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.form-note {
+  font-size: 12px; color: rgba(255,255,255,0.2);
+  text-align: center; margin-top: 4px; line-height: 1.5;
+}
+
+/* success state */
+.success-msg {
+  display: none;
+  text-align: center; padding: 48px 32px;
+  background: rgba(232,137,15,0.06);
+  border: 1px solid rgba(232,137,15,0.2);
+}
+
+.success-msg.visible { display: block; }
+
+.success-msg h2 {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 28px; letter-spacing: 0.06em; color: var(--amber);
+  margin-bottom: 12px;
+}
+
+.success-msg p {
+  font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7;
+}
+
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+footer a { color: rgba(255,255,255,0.25); text-decoration: none; }
+footer a:hover { color: var(--amber); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  nav { padding: 16px 24px; }
+  .page { padding: 120px 24px 80px; }
+  .nav-links { gap: 18px; }
+}
+</style>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<!-- ── OPEN GRAPH / SOCIAL ── -->
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="Contact — LatticeWorks Studio">
+<meta property="og:description"  content="Get in touch with LatticeWorks Studio. Bug reports, feature ideas, or just saying hi.">
+<meta property="og:url"          content="https://latticeworks.studio/contact.html">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Contact — LatticeWorks Studio">
+<meta name="twitter:description" content="Get in touch with LatticeWorks Studio. Bug reports, feature ideas, or just saying hi.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="Get in touch with LatticeWorks Studio. Bug reports, feature ideas, or just saying hi.">
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+      </g>
+    </svg>
+    <div class="nav-brand">
+      LATTICEWORKS
+      <span>S T U D I O</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="docs/index.html">Docs</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <div class="eyebrow">Get in Touch</div>
+  <h1>Say hello.</h1>
+  <p class="intro">
+    Bug to report? Feature idea? Just want to say the app saved you five minutes?<br>
+    Send it over. It's just me here, so replies may take a bit — but they do happen.
+  </p>
+
+  <form class="contact-form" id="contact-form"
+        name="contact" method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        action="/contact-success.html">
+
+    <!-- Netlify honeypot — hidden from real users, catches bots -->
+    <input type="hidden" name="form-name" value="contact">
+    <p style="display:none"><input name="bot-field"></p>
+
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" placeholder="What should I call you?" autocomplete="off" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="So I can write back" autocomplete="off" required>
+    </div>
+
+    <div class="field">
+      <label for="subject">Topic</label>
+      <select id="subject" name="subject" required>
+        <option value="" disabled selected>What's this about?</option>
+        <option value="bug">Bug report</option>
+        <option value="feature">Feature idea</option>
+        <option value="support">Support / question</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Tell me what's on your mind." required></textarea>
+    </div>
+
+    <button class="btn-submit" type="submit">Send Message →</button>
+    <p class="form-note">No mailing lists. No automated replies. Just a human reading this.</p>
+  </form>
+</div>
+
+<footer>
+  <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="products/assistask-manager-2.html">Assistask Manager 2</a> &nbsp;·&nbsp; <a href="about.html">About</a></p>
+</footer>
+
+<script>
+  // Shake the submit button if HTML5 validation fails (extra polish)
+  document.getElementById('contact-form').addEventListener('invalid', function(e) {
+    e.preventDefault();
+    const btn = document.querySelector('.btn-submit');
+    btn.style.transform = 'translateX(-6px)';
+    setTimeout(() => btn.style.transform = 'translateX(6px)', 80);
+    setTimeout(() => btn.style.transform = 'translateX(0)', 160);
+    e.target.focus();
+  }, true);
+</script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LatticeWorks Studio — Apps for the In-Between</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:      #0d1b35;
+  --amber:     #e8890f;
+  --amber-dim: rgba(232,137,15,0.14);
+  --muted:     rgba(255,255,255,0.45);
+  --faint:     rgba(255,255,255,0.06);
+  --grid:      rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ambient glow */
+body::after {
+  content: '';
+  position: fixed; top: -10%; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(232,137,15,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(13,27,53,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+
+.nav-logo-svg { width: 36px; height: 36px; }
+.nav-logo-svg .px { opacity: 1; transition: opacity 0.15s; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0.12em;
+  color: #fff;
+  line-height: 1;
+}
+
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  color: var(--amber);
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex; gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 24px 80px;
+  gap: 32px;
+  text-align: center;
+}
+
+.logo-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 22px;
+  animation: fadeUp 0.9s ease both;
+}
+
+.logo-svg { width: 108px; height: 108px; }
+.pixel { opacity: 0; transition: opacity 0.18s ease; }
+
+.logo-text .brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 38px;
+  letter-spacing: 0.12em;
+  color: #fff;
+  display: block;
+}
+
+.logo-text .sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.38em;
+  color: var(--amber);
+  display: block;
+  margin-top: 5px;
+}
+
+.hero-tagline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  color: rgba(255,255,255,0.14);
+  animation: fadeUp 0.9s 0.25s ease both;
+}
+
+.hero-desc {
+  max-width: 520px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--muted);
+  animation: fadeUp 0.9s 0.4s ease both;
+}
+
+.hero-desc strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ── PRODUCTS SECTION ── */
+.section {
+  position: relative; z-index: 1;
+  padding: 80px 48px 120px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(232,137,15,0.4), transparent);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2px;
+}
+
+.product-card {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 32px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.25s, border-color 0.25s;
+  overflow: hidden;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  background: rgba(232,137,15,0.05);
+  border-color: rgba(232,137,15,0.2);
+}
+
+.product-card:hover::before { transform: scaleX(1); }
+
+.product-card.coming {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+.product-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+
+.product-card.coming .product-tag { color: var(--muted); }
+
+.product-name {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.product-desc {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.product-arrow {
+  margin-top: auto;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  padding-top: 12px;
+}
+
+.product-arrow::after {
+  content: '→';
+  transition: transform 0.2s;
+}
+
+.product-card:hover .product-arrow::after { transform: translateX(4px); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  nav { padding: 16px 24px; }
+  .nav-links { gap: 20px; }
+  .section { padding: 60px 24px 80px; }
+}
+</style>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<!-- ── OPEN GRAPH / SOCIAL ── -->
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="LatticeWorks Studio — Apps for the In-Between">
+<meta property="og:description"  content="Apps for tinkerers and makers who want more than basic but less than enterprise. No subscriptions, no bloat.">
+<meta property="og:url"          content="https://latticeworks.studio/">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="LatticeWorks Studio — Apps for the In-Between">
+<meta name="twitter:description" content="Apps for tinkerers and makers who want more than basic but less than enterprise. No subscriptions, no bloat.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="Apps for tinkerers and makers who want more than basic but less than enterprise. No subscriptions, no bloat.">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+      </g>
+    </svg>
+    <div class="nav-brand">
+      LATTICEWORKS
+      <span>S T U D I O</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="docs/index.html">Docs</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="logo-wrap">
+    <svg class="logo-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(60,60) rotate(45)">
+        <rect class="pixel" data-i="0"  x="-43" y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="1"  x="-22" y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="2"  x="-1"  y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="3"  x="20"  y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="4"  x="-43" y="-22" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="5"  x="-22" y="-22" width="17" height="17" rx="1.5" fill="#ffffff"/>
+        <rect class="pixel" data-i="6"  x="-1"  y="-22" width="17" height="17" rx="1.5" fill="#ffffff"/>
+        <rect class="pixel" data-i="7"  x="20"  y="-22" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="8"  x="-43" y="-1"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="9"  x="-22" y="-1"  width="17" height="17" rx="1.5" fill="#ffffff"/>
+        <rect class="pixel" data-i="10" x="-1"  y="-1"  width="17" height="17" rx="1.5" fill="#ffffff"/>
+        <rect class="pixel" data-i="11" x="20"  y="-1"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="12" x="-43" y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="13" x="-22" y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="14" x="-1"  y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="15" x="20"  y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+      </g>
+    </svg>
+    <div class="logo-text">
+      <span class="brand">LATTICEWORKS</span>
+      <span class="sub">S T U D I O</span>
+    </div>
+  </div>
+
+  <p class="hero-tagline">APPS FOR THE IN-BETWEEN.</p>
+
+  <p class="hero-desc">
+    Not a pro. Not a beginner. Just someone who loves to <strong>make stuff and tinker</strong>.<br>
+    No bloated subscriptions. No dumbed-down tools. Just apps built for the people in the middle — because that's exactly who we are.
+  </p>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section">
+  <div class="section-label">Our Apps</div>
+  <div class="products-grid">
+
+    <a href="products/assistask-manager-2.html" class="product-card">
+      <div class="product-tag">Free</div>
+      <div class="product-name">Assistask Manager 2</div>
+      <div class="product-desc">Smart task capture that reads your intent. Type naturally, get priorities and due dates set automatically — no second pass required.</div>
+      <div class="product-arrow">View product</div>
+    </a>
+
+    <div class="product-card coming">
+      <div class="product-tag">Coming Soon</div>
+      <div class="product-name">??? </div>
+      <div class="product-desc">Something new is being built. Check back.</div>
+    </div>
+
+    <div class="product-card coming">
+      <div class="product-tag">Coming Soon</div>
+      <div class="product-name">???</div>
+      <div class="product-desc">Another tool for the in-between. Stay tuned.</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>© 2026 LATTICEWORKS STUDIO</footer>
+
+<script>
+  const pixels = Array.from(document.querySelectorAll('.pixel'))
+    .sort((a, b) => +a.dataset.i - +b.dataset.i);
+  const STEP = 80, HOLD = 600, PAUSE = 500, total = pixels.length;
+  function runCycle() {
+    pixels.forEach((p, i) => setTimeout(() => p.style.opacity = '1', i * STEP));
+    setTimeout(() => {
+      pixels.forEach((p, i) => setTimeout(() => p.style.opacity = '0', i * STEP));
+      setTimeout(runCycle, total * STEP + PAUSE);
+    }, total * STEP + HOLD);
+  }
+  setTimeout(runCycle, 600);
+</script>
+</body>
+</html>

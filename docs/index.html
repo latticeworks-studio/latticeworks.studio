@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docs — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:      #0d1b35;
+  --amber:     #e8890f;
+  --amber-dim: rgba(232,137,15,0.14);
+  --muted:     rgba(255,255,255,0.45);
+  --faint:     rgba(255,255,255,0.06);
+  --grid:      rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(13,27,53,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+/* ── PAGE ── */
+.page {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 140px 48px 120px;
+}
+
+.page-header { margin-bottom: 56px; }
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(232,137,15,0.4), transparent);
+}
+
+.page-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 0.06em;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.page-desc {
+  font-size: 15px; font-weight: 300; line-height: 1.7;
+  color: var(--muted); max-width: 540px;
+}
+
+/* ── DOCS GRID ── */
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2px;
+}
+
+.doc-card {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 32px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.25s, border-color 0.25s;
+  overflow: hidden;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+.doc-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.doc-card:hover { background: rgba(232,137,15,0.05); border-color: rgba(232,137,15,0.2); }
+.doc-card:hover::before { transform: scaleX(1); }
+
+.doc-card.coming { opacity: 0.4; pointer-events: none; }
+
+.doc-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 10px; letter-spacing: 0.3em;
+  color: var(--amber); text-transform: uppercase;
+}
+.doc-card.coming .doc-tag { color: var(--muted); }
+
+.doc-name {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 22px; letter-spacing: 0.06em;
+  color: #fff; line-height: 1.15;
+}
+
+.doc-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.6;
+  color: var(--muted);
+}
+
+.doc-arrow {
+  margin-top: auto;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.25em;
+  color: var(--amber); text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+  padding-top: 12px;
+}
+.doc-arrow::after { content: '→'; transition: transform 0.2s; }
+.doc-card:hover .doc-arrow::after { transform: translateX(4px); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+@media (max-width: 600px) {
+  nav { padding: 16px 24px; }
+  .nav-links { gap: 20px; }
+  .page { padding: 120px 24px 80px; }
+}
+</style>
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+      </g>
+    </svg>
+    <div class="nav-brand">LATTICEWORKS<span>S T U D I O</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="index.html" class="active">Docs</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <div class="section-label">Documentation</div>
+    <div class="page-title">PRODUCT DOCS</div>
+    <p class="page-desc">Guides, references, and commands for every LatticeWorks Studio app. Pick a product to get started.</p>
+  </div>
+
+  <div class="docs-grid">
+
+    <a href="flowscript/index.html" class="doc-card">
+      <div class="doc-tag">Visual Programming</div>
+      <div class="doc-name">FlowScript</div>
+      <div class="doc-desc">Node canvas, FlowBar commands, DSL reference, Frame Walker integration, and more.</div>
+      <div class="doc-arrow">View docs</div>
+    </a>
+
+    <div class="doc-card coming">
+      <div class="doc-tag">Coming Soon</div>
+      <div class="doc-name">Assistask Manager 2</div>
+      <div class="doc-desc">Documentation in progress.</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 LATTICEWORKS STUDIO</footer>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "version": "0.3.17",
+  "date": "2026-06-06",
+  "notes": "Ghost node preview while dragging edges, proximity-aware pin detection, drop-to-create nodes, Check for Updates.",
+  "downloads": {
+    "desktop": "https://github.com/YOUR_ORG/flowscript-releases/releases/download/v0.3.17/FlowScript-Setup-0.3.17.exe"
+  }
+}
