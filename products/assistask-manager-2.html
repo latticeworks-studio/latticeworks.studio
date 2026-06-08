@@ -623,7 +623,7 @@ footer a:hover { color: var(--amber); }
       <li>Task summary at a glance</li>
       <li>All future updates included</li>
     </ul>
-    <a href="https://github.com/latticeworks-studio/AssistaskManager-v2/releases/download/v2.0.2/Assistask_2.0.2_x64_en-US.msi" class="btn-primary" style="width:100%; justify-content:center; font-size:14px; padding:16px;">
+    <a id="download-btn" href="https://github.com/latticeworks-studio/AssistaskManager-v2/releases/latest" class="btn-primary" style="width:100%; justify-content:center; font-size:14px; padding:16px;">
       Download Assistask Manager 2 →
     </a>
   </div>
@@ -633,5 +633,18 @@ footer a:hover { color: var(--amber); }
   <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="../about.html">About</a> &nbsp;·&nbsp; <a href="../contact.html">Contact</a></p>
 </footer>
 
+<script>
+  fetch('https://api.github.com/repos/latticeworks-studio/AssistaskManager-v2/releases/latest')
+    .then(r => r.json())
+    .then(data => {
+      const msi = data.assets && data.assets.find(a => a.name.endsWith('.msi'));
+      if (msi) {
+        const btn = document.getElementById('download-btn');
+        btn.href = msi.browser_download_url;
+        btn.textContent = `Download Assistask Manager 2 (${data.tag_name}) →`;
+      }
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>
