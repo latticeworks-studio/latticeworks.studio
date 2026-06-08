@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FlowScript Docs — LatticeWorks Studio</title>
+<title>Assistask Manager 2 Docs — LatticeWorks Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
 <style>
@@ -388,7 +388,7 @@ footer {
   <ul class="nav-links">
     <li><a href="../../index.html">Home</a></li>
     <li class="nav-dropdown">
-      <a href="#">Products</a>
+      <a href="#" class="active">Products</a>
       <ul class="dropdown-menu">
         <li><a href="../../products/assistask-manager-2.html">Assistask</a></li>
       </ul>
@@ -405,7 +405,7 @@ footer {
   <aside class="sidebar">
     <div class="sidebar-product">
       <div class="sidebar-product-label">Docs</div>
-      <div class="sidebar-product-name">FlowScript</div>
+      <div class="sidebar-product-name">Assistask</div>
       <a href="../index.html" class="sidebar-back">All products</a>
     </div>
     <div class="sidebar-section-label">Contents</div>
@@ -417,9 +417,9 @@ footer {
   <!-- MAIN -->
   <main class="doc-main" id="doc-main">
     <div class="doc-placeholder">
-      <div class="doc-placeholder-label">FlowScript</div>
+      <div class="doc-placeholder-label">Assistask Manager 2</div>
       <div class="doc-placeholder-title">DOCUMENTATION</div>
-      <p class="doc-placeholder-desc">Select a topic from the sidebar to start reading. All docs are kept up to date with the latest version of FlowScript.</p>
+      <p class="doc-placeholder-desc">Select a topic from the sidebar to start reading. All docs are kept up to date with the latest release.</p>
     </div>
   </main>
 
@@ -428,7 +428,7 @@ footer {
 <footer>© 2026 LATTICEWORKS STUDIO</footer>
 
 <script>
-  const REPO   = 'latticeworks-studio/flowscript_releases';
+  const REPO   = 'latticeworks-studio/AssistaskManager-v2';
   const BRANCH = 'main';
   const BASE   = `https://cdn.jsdelivr.net/gh/${REPO}@${BRANCH}/docs`;
 
@@ -443,7 +443,6 @@ footer {
       if (!res.ok) throw new Error(res.status);
       const data = await res.json();
       renderSidebar(data.docs ?? []);
-      // auto-load first doc if ?doc= param present
       const param = new URLSearchParams(location.search).get('doc');
       if (param) loadDoc(param);
     } catch (err) {
@@ -467,7 +466,6 @@ footer {
   async function loadDoc(file) {
     docMain.innerHTML = `<div class="doc-placeholder"><p class="doc-placeholder-desc" style="padding-top:20px">Loading…</p></div>`;
 
-    // update active state
     if (activeLink) activeLink.classList.remove('active');
     activeLink = docList.querySelector(`a[data-file="${file}"]`);
     if (activeLink) activeLink.classList.add('active');
