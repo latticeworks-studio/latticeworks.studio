@@ -133,85 +133,53 @@ h1 {
   animation: fadeUp 0.7s 0.2s ease both;
 }
 
-/* ── FORM ── */
-.contact-form {
-  display: flex; flex-direction: column; gap: 20px;
+/* ── CONTACT ACTIONS ── */
+.contact-actions {
+  display: flex; flex-direction: column; gap: 12px;
   animation: fadeUp 0.7s 0.3s ease both;
 }
 
-.field { display: flex; flex-direction: column; gap: 8px; }
-
-.field label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 11px; letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.35); text-transform: uppercase;
-}
-
-.field input,
-.field textarea,
-.field select {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: #fff;
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px; font-weight: 300;
-  padding: 14px 18px;
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
-  border-radius: 0;
-  -webkit-appearance: none;
-}
-
-.field input::placeholder,
-.field textarea::placeholder { color: rgba(255,255,255,0.2); }
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  border-color: rgba(232,137,15,0.5);
-  background: rgba(232,137,15,0.04);
-}
-
-.field textarea { resize: vertical; min-height: 140px; }
-
-.field select option { background: #0d1b35; color: #fff; }
-
-.btn-submit {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+.btn-primary {
+  display: flex; align-items: center; justify-content: center;
   background: var(--amber); color: var(--navy);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
-  text-transform: uppercase; border: none; cursor: pointer;
-  padding: 16px 32px; margin-top: 8px;
+  text-transform: uppercase; text-decoration: none;
+  padding: 16px 32px;
   transition: opacity 0.2s, transform 0.2s;
-  width: 100%;
 }
 
-.btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
 
-.form-note {
+.btn-secondary {
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.12); color: var(--muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 16px 32px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+
+.contact-divider {
+  display: flex; align-items: center; gap: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.15); text-transform: uppercase;
+  margin: 4px 0;
+}
+
+.contact-divider::before,
+.contact-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(255,255,255,0.06);
+}
+
+.contact-note {
   font-size: 12px; color: rgba(255,255,255,0.2);
-  text-align: center; margin-top: 4px; line-height: 1.5;
-}
-
-/* success state */
-.success-msg {
-  display: none;
-  text-align: center; padding: 48px 32px;
-  background: rgba(232,137,15,0.06);
-  border: 1px solid rgba(232,137,15,0.2);
-}
-
-.success-msg.visible { display: block; }
-
-.success-msg h2 {
-  font-family: 'Bakbak One', sans-serif;
-  font-size: 28px; letter-spacing: 0.06em; color: var(--amber);
-  margin-bottom: 12px;
-}
-
-.success-msg p {
-  font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7;
+  text-align: center; line-height: 1.5; margin-top: 4px;
 }
 
 footer {
@@ -305,64 +273,24 @@ footer a:hover { color: var(--amber); }
   <h1>Say hello.</h1>
   <p class="intro">
     Bug to report? Feature idea? Just want to say the app saved you five minutes?<br>
-    Send it over. It's just me here, so replies may take a bit — but they do happen.
+    It's just me here, so replies may take a bit — but they do happen.
   </p>
 
-  <form class="contact-form" id="contact-form"
-        name="contact" method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        action="/contact-success.html">
-
-    <!-- Netlify honeypot — hidden from real users, catches bots -->
-    <input type="hidden" name="form-name" value="contact">
-    <p style="display:none"><input name="bot-field"></p>
-
-    <div class="field">
-      <label for="name">Your name</label>
-      <input type="text" id="name" name="name" placeholder="What should I call you?" autocomplete="off" required>
-    </div>
-
-    <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="So I can write back" autocomplete="off" required>
-    </div>
-
-    <div class="field">
-      <label for="subject">Topic</label>
-      <select id="subject" name="subject" required>
-        <option value="" disabled selected>What's this about?</option>
-        <option value="bug">Bug report</option>
-        <option value="feature">Feature idea</option>
-        <option value="support">Support / question</option>
-        <option value="other">Something else</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="Tell me what's on your mind." required></textarea>
-    </div>
-
-    <button class="btn-submit" type="submit">Send Message →</button>
-    <p class="form-note">No mailing lists. No automated replies. Just a human reading this.</p>
-  </form>
+  <div class="contact-actions">
+    <a href="mailto:contact@latticeworks.studio" class="btn-primary">
+      Send an Email →
+    </a>
+    <div class="contact-divider">or</div>
+    <a href="https://github.com/latticeworks-studio/AssistaskManager-v2/issues/new" class="btn-secondary" target="_blank" rel="noopener">
+      Open a GitHub Issue →
+    </a>
+    <p class="contact-note">No mailing lists. No automated replies. Just a human reading this.</p>
+  </div>
 </div>
 
 <footer>
   <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="products/assistask-manager-2.html">Assistask Manager 2</a> &nbsp;·&nbsp; <a href="about.html">About</a></p>
 </footer>
 
-<script>
-  // Shake the submit button if HTML5 validation fails (extra polish)
-  document.getElementById('contact-form').addEventListener('invalid', function(e) {
-    e.preventDefault();
-    const btn = document.querySelector('.btn-submit');
-    btn.style.transform = 'translateX(-6px)';
-    setTimeout(() => btn.style.transform = 'translateX(6px)', 80);
-    setTimeout(() => btn.style.transform = 'translateX(0)', 160);
-    e.target.focus();
-  }, true);
-</script>
 </body>
 </html>
