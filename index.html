@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,9 +9,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --navy:      #0d1b35;
-  --amber:     #e8890f;
-  --amber-dim: rgba(232,137,15,0.14);
+  --navy:      #1a1918;
+  --amber:     #c9877b;
+  --amber-dim: rgba(201,135,123,0.14);
   --muted:     rgba(255,255,255,0.45);
   --faint:     rgba(255,255,255,0.06);
   --grid:      rgba(255,255,255,0.025);
@@ -42,7 +42,7 @@ body::after {
   position: fixed; top: -10%; left: 50%;
   transform: translateX(-50%);
   width: 700px; height: 500px;
-  background: radial-gradient(ellipse, rgba(232,137,15,0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(201,135,123,0.07) 0%, transparent 70%);
   pointer-events: none; z-index: 0;
 }
 
@@ -52,7 +52,7 @@ nav {
   z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 48px;
-  background: linear-gradient(to bottom, rgba(13,27,53,0.95) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(26,25,24,0.95) 0%, transparent 100%);
   backdrop-filter: blur(2px);
 }
 
@@ -107,7 +107,7 @@ nav {
 .dropdown-menu {
   display: none;
   position: absolute; top: calc(100% + 14px); right: 0;
-  background: rgba(13,27,53,0.97);
+  background: rgba(26,25,24,0.97);
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(8px);
   min-width: 160px;
@@ -217,7 +217,7 @@ nav {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, rgba(232,137,15,0.4), transparent);
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
 }
 
 .products-grid {
@@ -249,8 +249,8 @@ nav {
 }
 
 .product-card:hover {
-  background: rgba(232,137,15,0.05);
-  border-color: rgba(232,137,15,0.2);
+  background: rgba(201,135,123,0.05);
+  border-color: rgba(201,135,123,0.2);
 }
 
 .product-card:hover::before { transform: scaleX(1); }
@@ -356,22 +356,22 @@ footer {
   <a href="index.html" class="nav-logo">
     <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(18,18) rotate(45)">
-        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
       </g>
     </svg>
     <div class="nav-brand">
@@ -398,22 +398,22 @@ footer {
   <div class="logo-wrap">
     <svg class="logo-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(60,60) rotate(45)">
-        <rect class="pixel" data-i="0"  x="-43" y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="1"  x="-22" y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="2"  x="-1"  y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="3"  x="20"  y="-43" width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="4"  x="-43" y="-22" width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="0"  x="-43" y="-43" width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="1"  x="-22" y="-43" width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="2"  x="-1"  y="-43" width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="3"  x="20"  y="-43" width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="4"  x="-43" y="-22" width="17" height="17" rx="1.5" fill="#c9877b"/>
         <rect class="pixel" data-i="5"  x="-22" y="-22" width="17" height="17" rx="1.5" fill="#ffffff"/>
         <rect class="pixel" data-i="6"  x="-1"  y="-22" width="17" height="17" rx="1.5" fill="#ffffff"/>
-        <rect class="pixel" data-i="7"  x="20"  y="-22" width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="8"  x="-43" y="-1"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="7"  x="20"  y="-22" width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="8"  x="-43" y="-1"  width="17" height="17" rx="1.5" fill="#c9877b"/>
         <rect class="pixel" data-i="9"  x="-22" y="-1"  width="17" height="17" rx="1.5" fill="#ffffff"/>
         <rect class="pixel" data-i="10" x="-1"  y="-1"  width="17" height="17" rx="1.5" fill="#ffffff"/>
-        <rect class="pixel" data-i="11" x="20"  y="-1"  width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="12" x="-43" y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="13" x="-22" y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="14" x="-1"  y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
-        <rect class="pixel" data-i="15" x="20"  y="20"  width="17" height="17" rx="1.5" fill="#e8890f"/>
+        <rect class="pixel" data-i="11" x="20"  y="-1"  width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="12" x="-43" y="20"  width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="13" x="-22" y="20"  width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="14" x="-1"  y="20"  width="17" height="17" rx="1.5" fill="#c9877b"/>
+        <rect class="pixel" data-i="15" x="20"  y="20"  width="17" height="17" rx="1.5" fill="#c9877b"/>
       </g>
     </svg>
     <div class="logo-text">

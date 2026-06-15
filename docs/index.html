@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,9 +9,9 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --navy:      #0d1b35;
-  --amber:     #e8890f;
-  --amber-dim: rgba(232,137,15,0.14);
+  --navy:      #1a1918;
+  --amber:     #c9877b;
+  --amber-dim: rgba(201,135,123,0.14);
   --muted:     rgba(255,255,255,0.45);
   --faint:     rgba(255,255,255,0.06);
   --grid:      rgba(255,255,255,0.025);
@@ -40,7 +40,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 48px;
-  background: linear-gradient(to bottom, rgba(13,27,53,0.97) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(26,25,24,0.97) 0%, transparent 100%);
   backdrop-filter: blur(2px);
 }
 
@@ -74,7 +74,7 @@ nav {
 .dropdown-menu {
   display: none;
   position: absolute; top: calc(100% + 14px); right: 0;
-  background: rgba(13,27,53,0.97);
+  background: rgba(26,25,24,0.97);
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(8px);
   min-width: 160px;
@@ -119,7 +119,7 @@ nav {
 .section-label::after {
   content: '';
   flex: 1; height: 1px;
-  background: linear-gradient(to right, rgba(232,137,15,0.4), transparent);
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
 }
 
 .page-title {
@@ -165,7 +165,7 @@ nav {
   transition: transform 0.3s ease;
 }
 
-.doc-card:hover { background: rgba(232,137,15,0.05); border-color: rgba(232,137,15,0.2); }
+.doc-card:hover { background: rgba(201,135,123,0.05); border-color: rgba(201,135,123,0.2); }
 .doc-card:hover::before { transform: scaleX(1); }
 
 .doc-card.coming { opacity: 0.4; pointer-events: none; }
@@ -225,22 +225,22 @@ footer {
   <a href="../index.html" class="nav-logo">
     <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(18,18) rotate(45)">
-        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
       </g>
     </svg>
     <div class="nav-brand">LATTICEWORKS<span>S T U D I O</span></div>

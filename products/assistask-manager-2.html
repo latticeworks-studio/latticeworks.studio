@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -9,8 +9,8 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --navy:   #0d1b35;
-  --amber:  #e8890f;
+  --navy:   #1a1918;
+  --amber:  #c9877b;
   --muted:  rgba(255,255,255,0.45);
   --faint:  rgba(255,255,255,0.06);
   --grid:   rgba(255,255,255,0.025);
@@ -39,7 +39,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 48px;
-  background: linear-gradient(to bottom, rgba(13,27,53,0.97) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(26,25,24,0.97) 0%, transparent 100%);
   backdrop-filter: blur(2px);
 }
 
@@ -80,7 +80,7 @@ nav {
 .dropdown-menu {
   display: none;
   position: absolute; top: calc(100% + 14px); right: 0;
-  background: rgba(13,27,53,0.97);
+  background: rgba(26,25,24,0.97);
   border: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(8px);
   min-width: 160px;
@@ -192,7 +192,7 @@ nav {
   display: inline-block;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(232,137,15,0.12);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,135,123,0.12);
   max-width: 100%;
 }
 
@@ -237,7 +237,7 @@ nav {
 
 .section-label::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(to right, rgba(232,137,15,0.4), transparent);
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
 }
 
 .features-grid {
@@ -253,7 +253,7 @@ nav {
   transition: background 0.2s;
 }
 
-.feature-card:hover { background: rgba(232,137,15,0.04); }
+.feature-card:hover { background: rgba(201,135,123,0.04); }
 
 .feature-icon {
   font-size: 24px; line-height: 1;
@@ -304,7 +304,7 @@ nav {
 
 .how-input-text em {
   color: var(--amber); font-style: normal;
-  background: rgba(232,137,15,0.1);
+  background: rgba(201,135,123,0.1);
   padding: 1px 5px; border-radius: 2px;
 }
 
@@ -403,22 +403,22 @@ footer a:hover { color: var(--amber); }
   <a href="../index.html" class="nav-logo">
     <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(18,18) rotate(45)">
-        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
         <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
         <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
-        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
-        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#e8890f"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
       </g>
     </svg>
     <div class="nav-brand">
