@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LatticeColor — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:   #1a1918;
+  --amber:  #c9877b;
+  --muted:  rgba(255,255,255,0.45);
+  --faint:  rgba(255,255,255,0.06);
+  --grid:   rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(26,25,24,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: inline-flex; align-items: center; gap: 6px; }
+.nav-dropdown > a::after { content: '▾'; font-size: 11px; }
+.dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 14px); right: 0;
+  background: rgba(26,25,24,0.97);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  min-width: 160px;
+  padding: 6px 0;
+  z-index: 101;
+  list-style: none;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display: block; }
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -14px; left: 0; right: 0;
+  height: 14px;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 9px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.45); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+.dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+
+/* ── PRODUCT HERO ── */
+.product-hero {
+  position: relative; z-index: 1;
+  padding: 160px 48px 80px;
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-eyebrow::before {
+  content: ''; width: 24px; height: 1px;
+  background: var(--amber);
+}
+
+.hero-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(36px, 5vw, 58px);
+  letter-spacing: 0.06em; line-height: 1.05;
+  color: #fff;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.hero-subtitle {
+  margin-top: 20px;
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: var(--muted);
+  max-width: 440px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-cta {
+  margin-top: 36px;
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+
+.coming-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(201,135,123,0.3);
+  color: var(--amber);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+}
+
+.coming-badge::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 14px 28px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+/* ── APP MOCKUP ── */
+.mockup-wrap {
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.screenshot-frame {
+  position: relative;
+  display: inline-block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,135,123,0.12);
+  max-width: 100%;
+}
+
+.screenshot-frame img {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+/* ── SECTIONS ── */
+.section {
+  position: relative; z-index: 1;
+  padding: 0 48px 100px;
+  max-width: 1100px; margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 48px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
+}
+
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.feature-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background 0.2s;
+}
+
+.feature-card:hover { background: rgba(201,135,123,0.04); }
+
+.feature-icon {
+  font-size: 24px; line-height: 1;
+  margin-bottom: 4px;
+}
+
+.feature-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
+  color: #fff; text-transform: uppercase;
+}
+
+.feature-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── HOW IT WORKS ── */
+.how-section {
+  position: relative; z-index: 1;
+  padding: 0 48px 100px;
+  max-width: 1100px; margin: 0 auto;
+}
+
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.step-card {
+  padding: 36px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; gap: 16px;
+  position: relative;
+}
+
+.step-number {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 48px; letter-spacing: 0.06em;
+  color: rgba(201,135,123,0.15);
+  line-height: 1;
+}
+
+.step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 15px; letter-spacing: 0.1em;
+  color: #fff; text-transform: uppercase;
+}
+
+.step-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+.step-detail {
+  margin-top: auto;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.15em;
+  color: var(--amber); text-transform: uppercase;
+}
+
+/* ── COMING SOON STRIP ── */
+.coming-strip {
+  position: relative; z-index: 1;
+  padding: 0 48px 120px;
+  max-width: 680px; margin: 0 auto;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+
+.coming-strip-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 28px; letter-spacing: 0.06em;
+  color: #fff;
+}
+
+.coming-strip-desc {
+  font-size: 14px; font-weight: 300; line-height: 1.75;
+  color: var(--muted); max-width: 420px;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--amber);
+  color: var(--navy);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 14px 28px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+footer a { color: rgba(255,255,255,0.25); text-decoration: none; }
+footer a:hover { color: var(--amber); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .product-hero { grid-template-columns: 1fr; gap: 48px; padding: 120px 24px 60px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  nav { padding: 16px 24px; }
+  .section, .how-section, .coming-strip { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 18px; }
+}
+</style>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<!-- ── OPEN GRAPH / SOCIAL ── -->
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="LatticeColor — LatticeWorks Studio">
+<meta property="og:description"  content="Pick any color on screen, see its values instantly, and explore palettes that complement it.">
+<meta property="og:url"          content="https://latticeworks.studio/products/latticecolor.html">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="LatticeColor — LatticeWorks Studio">
+<meta name="twitter:description" content="Pick any color on screen, see its values instantly, and explore palettes that complement it.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="Pick any color on screen, see its values instantly, and explore palettes that complement it.">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+      </g>
+    </svg>
+    <div class="nav-brand">
+      LATTICEWORKS
+      <span>S T U D I O</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="active">Products</a>
+      <ul class="dropdown-menu">
+        <li><a href="assistask-manager-2.html">Assistask</a></li>
+        <li><a href="latticecolor.html">LatticeColor</a></li>
+      </ul>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../docs/index.html">Docs</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PRODUCT HERO -->
+<div class="product-hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">In Development</div>
+    <h1 class="hero-title">LatticeColor</h1>
+    <p class="hero-subtitle">
+      Pick any color you see on screen, get its hex, RGB, HSL, and OKLCH values instantly, and explore palettes that work with it — all from a compact panel that stays out of your way.
+    </p>
+    <div class="hero-cta">
+      <span class="coming-badge">Coming Soon — Free</span>
+    </div>
+  </div>
+
+  <div class="mockup-wrap">
+    <div class="screenshot-frame">
+      <img src="latticecolor-screenshot.png" alt="LatticeColor — app screenshot">
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">Features</div>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">⊕</div>
+      <div class="feature-name">Global eyedropper</div>
+      <div class="feature-desc">Pick from any pixel on screen — across any open app — with a single hotkey or button click. No focus switching required.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-name">Pixel-perfect magnifier</div>
+      <div class="feature-desc">The screen freezes and a 10× zoom follows your cursor with a pixel grid overlay so you land exactly on the color you want.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-name">Four color formats</div>
+      <div class="feature-desc">Hex, RGB, HSL, and OKLCH — all shown at once, all copyable in one click. No mental math, no converter tabs.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <div class="feature-name">6 palette types</div>
+      <div class="feature-desc">Complementary, analogous, triadic, tetradic, monochrome, and a Material-style tonal ramp — generated instantly from any base color.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <div class="feature-name">Palette variants</div>
+      <div class="feature-desc">Shift any palette darker, lighter, muted, or vibrant — or spin it to a random harmony — with a single click.</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🕐</div>
+      <div class="feature-name">Color history</div>
+      <div class="feature-desc">Your last five picks are always visible. Click any to restore it as the base and re-explore its palette without re-picking from screen.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="how-section">
+  <div class="section-label">How It Works</div>
+  <div class="steps-grid">
+
+    <div class="step-card">
+      <div class="step-number">01</div>
+      <div class="step-title">Trigger the eyedropper</div>
+      <div class="step-desc">Press the global hotkey from any app. The screen freezes instantly — no need to switch focus or move windows out of the way.</div>
+      <div class="step-detail">Ctrl + Shift + C</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">02</div>
+      <div class="step-title">Click any pixel</div>
+      <div class="step-desc">A magnified cursor shows a pixel grid at 10× zoom. Move to the exact color you need and click. Esc cancels with no side effects.</div>
+      <div class="step-detail">Screen zoom + pixel grid</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">03</div>
+      <div class="step-title">Explore the color</div>
+      <div class="step-desc">Hex, RGB, HSL, and OKLCH appear immediately. Pick a palette type to see complementary colors, then shift the whole palette darker, lighter, or muted.</div>
+      <div class="step-detail">Values + palette + variants</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-strip">
+  <div class="section-label" style="justify-content:center;">Get It</div>
+  <div class="coming-strip-title">Free. Coming soon.</div>
+  <p class="coming-strip-desc">
+    LatticeColor is in active development. It'll be free when it ships.
+  </p>
+</section>
+
+<footer>
+  <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="../about.html">About</a> &nbsp;·&nbsp; <a href="../contact.html">Contact</a></p>
+</footer>
+
+</body>
+</html>
