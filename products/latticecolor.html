@@ -336,6 +336,12 @@ nav {
 
 .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
 
+.download-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+
 /* ── FOOTER ── */
 footer {
   position: relative; z-index: 1;
@@ -437,13 +443,14 @@ footer a:hover { color: var(--amber); }
 <!-- PRODUCT HERO -->
 <div class="product-hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">In Development</div>
+    <div class="hero-eyebrow">Available Now</div>
     <h1 class="hero-title">LatticeColor</h1>
     <p class="hero-subtitle">
       Pick any color you see on screen, get its hex, RGB, HSL, and OKLCH values instantly, and explore palettes that work with it — all from a compact panel that stays out of your way.
     </p>
     <div class="hero-cta">
-      <span class="coming-badge">Coming Soon — Free</span>
+      <a href="https://github.com/latticeworks-studio/LatticeColor/releases/latest" class="btn-primary download-btn">Download Free →</a>
+      <a href="https://github.com/latticeworks-studio/LatticeColor" class="btn-secondary" target="_blank" rel="noopener">View on GitHub →</a>
     </div>
   </div>
 
@@ -530,15 +537,30 @@ footer a:hover { color: var(--amber); }
 <!-- COMING SOON -->
 <section class="coming-strip">
   <div class="section-label" style="justify-content:center;">Get It</div>
-  <div class="coming-strip-title">Free. Coming soon.</div>
-  <p class="coming-strip-desc">
-    LatticeColor is in active development. It'll be free when it ships.
-  </p>
+  <a id="download-btn" href="https://github.com/latticeworks-studio/LatticeColor/releases/latest" class="btn-primary download-btn" style="font-size:14px; padding:16px 40px;">
+    Download LatticeColor →
+  </a>
+  <p class="download-meta">Windows 10 / 11 &nbsp;·&nbsp; 64-bit &nbsp;·&nbsp; Free forever &nbsp;·&nbsp; Open source</p>
 </section>
 
 <footer>
   <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="../about.html">About</a> &nbsp;·&nbsp; <a href="../contact.html">Contact</a></p>
 </footer>
 
+<script>
+  fetch('https://api.github.com/repos/latticeworks-studio/LatticeColor/releases/latest')
+    .then(r => r.json())
+    .then(data => {
+      const msi = data.assets && data.assets.find(a => a.name.endsWith('.msi'));
+      if (msi) {
+        document.querySelectorAll('.download-btn').forEach(btn => {
+          btn.href = msi.browser_download_url;
+        });
+        const bottom = document.getElementById('download-btn');
+        if (bottom) bottom.textContent = `Download LatticeColor (${data.tag_name}) →`;
+      }
+    })
+    .catch(() => {});
+</script>
 </body>
 </html>
