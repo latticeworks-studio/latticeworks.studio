@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowScript — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:   #1a1918;
+  --amber:  #c9877b;
+  --muted:  rgba(255,255,255,0.45);
+  --grid:   rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ambient glow */
+body::after {
+  content: '';
+  position: fixed; top: -10%; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(201,135,123,0.06) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(26,25,24,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: inline-flex; align-items: center; gap: 6px; }
+.nav-dropdown > a::after { content: '▾'; font-size: 11px; }
+.dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 14px); right: 0;
+  background: rgba(26,25,24,0.97);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  min-width: 160px; padding: 6px 0;
+  z-index: 101; list-style: none;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display: block; }
+.dropdown-menu::before {
+  content: '';
+  position: absolute; top: -14px; left: 0; right: 0; height: 14px;
+}
+.dropdown-menu a {
+  display: block; padding: 9px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.45); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+.dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 48px 80px;
+  gap: 0;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.5em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 16px;
+  animation: fadeUp 0.7s ease both;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: ''; width: 48px; height: 1px;
+  background: rgba(201,135,123,0.4);
+}
+
+.hero-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(52px, 9vw, 96px);
+  letter-spacing: 0.06em; line-height: 1.0;
+  color: #fff;
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.hero-subtitle {
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: var(--muted); max-width: 480px;
+  margin-bottom: 52px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+/* ── NODE GRAPH ── */
+.graph-wrap {
+  width: 100%; max-width: 780px;
+  margin-bottom: 52px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.node-graph { width: 100%; display: block; }
+
+/* Connection lines */
+.conn-track {
+  fill: none;
+  stroke: rgba(255,255,255,0.04);
+  stroke-width: 2;
+}
+
+.conn-line {
+  fill: none;
+  stroke: #c9877b;
+  stroke-width: 1.5;
+  stroke-opacity: 0.55;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawLine 0.7s ease forwards;
+}
+
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+/* Nodes */
+.node { opacity: 0; animation: fadeIn 0.35s ease forwards; }
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ── NEWSLETTER ── */
+.notify-wrap {
+  width: 100%; max-width: 440px;
+  animation: fadeUp 0.7s 0.5s ease both;
+}
+
+.notify-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 10px; letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.22); text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.embeddable-buttondown-form {
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.embeddable-buttondown-form label { display: none; }
+
+.embeddable-buttondown-form input[type="email"] {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px; font-weight: 300;
+  padding: 14px 18px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+.embeddable-buttondown-form input[type="email"]::placeholder {
+  color: rgba(255,255,255,0.18);
+}
+.embeddable-buttondown-form input[type="email"]:focus {
+  border-color: rgba(201,135,123,0.45);
+}
+
+.embeddable-buttondown-form input[type="submit"] {
+  background: var(--amber);
+  color: var(--navy);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none; padding: 14px 28px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.embeddable-buttondown-form input[type="submit"]:hover {
+  opacity: 0.88; transform: translateY(-1px);
+}
+
+.embeddable-buttondown-form p {
+  font-size: 11px; color: rgba(255,255,255,0.1);
+  text-align: center; margin-top: 6px;
+}
+.embeddable-buttondown-form p a {
+  color: rgba(255,255,255,0.1); text-decoration: none;
+}
+.embeddable-buttondown-form p a:hover { color: rgba(255,255,255,0.28); }
+
+/* ── TEASERS ── */
+.teasers {
+  position: relative; z-index: 1;
+  padding: 80px 48px 120px;
+  max-width: 1100px; margin: 0 auto;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 48px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
+}
+
+.teasers-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+
+.teaser-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background 0.2s;
+}
+.teaser-card:hover { background: rgba(201,135,123,0.04); }
+
+.teaser-icon {
+  font-size: 22px; line-height: 1; margin-bottom: 4px;
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.teaser-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
+  color: #fff; text-transform: uppercase;
+}
+
+.teaser-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+footer a { color: rgba(255,255,255,0.25); text-decoration: none; }
+footer a:hover { color: var(--amber); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .teasers { padding: 60px 24px 80px; }
+  .teasers-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .teasers-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 18px; }
+}
+</style>
+
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="FlowScript — LatticeWorks Studio">
+<meta property="og:description"  content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+<meta property="og:url"          content="https://latticeworks.studio/products/flowscript.html">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="FlowScript — LatticeWorks Studio">
+<meta name="twitter:description" content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+      </g>
+    </svg>
+    <div class="nav-brand">LATTICEWORKS<span>S T U D I O</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="active">Products</a>
+      <ul class="dropdown-menu">
+        <li><a href="assistask-manager-2.html">Assistask</a></li>
+        <li><a href="latticecolor.html">LatticeColor</a></li>
+        <li><a href="flowscript.html">FlowScript</a></li>
+      </ul>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../docs/index.html">Docs</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Coming Soon</div>
+  <h1 class="hero-title">FlowScript</h1>
+  <p class="hero-subtitle">
+    A powerful node editor for putting down any logic or flow you can think of — without getting in your way.
+  </p>
+
+  <!-- NODE GRAPH -->
+  <div class="graph-wrap">
+    <svg class="node-graph" viewBox="0 0 760 182" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- ── CONNECTION TRACKS (background) ── -->
+      <path class="conn-track" d="M 160 91 C 195 91, 195 41, 230 41"/>
+      <path class="conn-track" d="M 160 91 C 195 91, 195 141, 230 141"/>
+      <path class="conn-track" d="M 360 41 C 395 41, 395 91, 430 91"/>
+      <path class="conn-track" d="M 360 141 C 395 141, 395 91, 430 91"/>
+      <path class="conn-track" d="M 560 91 L 630 91"/>
+
+      <!-- ── ANIMATED CONNECTION LINES ── -->
+      <path class="conn-line" d="M 160 91 C 195 91, 195 41, 230 41" style="animation-delay:0.6s"/>
+      <path class="conn-line" d="M 160 91 C 195 91, 195 141, 230 141" style="animation-delay:0.7s"/>
+      <path class="conn-line" d="M 360 41 C 395 41, 395 91, 430 91" style="animation-delay:1.0s"/>
+      <path class="conn-line" d="M 360 141 C 395 141, 395 91, 430 91" style="animation-delay:1.1s"/>
+      <path class="conn-line" d="M 560 91 L 630 91" style="animation-delay:1.4s"/>
+
+      <!-- ── FLOW DOTS ── -->
+      <circle r="3.5" fill="#c9877b" opacity="0.85">
+        <animateMotion dur="2.2s" begin="1.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+          <mpath href="#fp-1"/>
+        </animateMotion>
+      </circle>
+      <circle r="3.5" fill="#c9877b" opacity="0.85">
+        <animateMotion dur="2.2s" begin="2.3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+          <mpath href="#fp-2"/>
+        </animateMotion>
+      </circle>
+      <circle r="3.5" fill="#c9877b" opacity="0.85">
+        <animateMotion dur="1.8s" begin="3.0s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+          <mpath href="#fp-3"/>
+        </animateMotion>
+      </circle>
+      <circle r="3.5" fill="#c9877b" opacity="0.85">
+        <animateMotion dur="1.8s" begin="3.8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+          <mpath href="#fp-4"/>
+        </animateMotion>
+      </circle>
+      <circle r="3.5" fill="#c9877b" opacity="0.85">
+        <animateMotion dur="1.4s" begin="4.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+          <mpath href="#fp-5"/>
+        </animateMotion>
+      </circle>
+
+      <!-- Motion paths for dots (hidden, referenced by animateMotion) -->
+      <defs>
+        <path id="fp-1" d="M 160 91 C 195 91, 195 41, 230 41"/>
+        <path id="fp-2" d="M 160 91 C 195 91, 195 141, 230 141"/>
+        <path id="fp-3" d="M 360 41 C 395 41, 395 91, 430 91"/>
+        <path id="fp-4" d="M 360 141 C 395 141, 395 91, 430 91"/>
+        <path id="fp-5" d="M 560 91 L 630 91"/>
+      </defs>
+
+      <!-- ── NODE: TRIGGER ── -->
+      <g class="node" style="animation-delay:0.2s">
+        <rect x="20" y="71" width="140" height="40" rx="4" fill="rgba(201,135,123,0.07)" stroke="rgba(201,135,123,0.3)" stroke-width="1"/>
+        <rect x="20" y="71" width="4" height="40" rx="2" fill="#c9877b"/>
+        <text x="36" y="88" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="rgba(201,135,123,0.9)" text-transform="uppercase">TRIGGER</text>
+        <text x="36" y="103" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="rgba(255,255,255,0.55)">on.start</text>
+        <circle cx="160" cy="91" r="4.5" fill="#c9877b" stroke="#1a1918" stroke-width="2"/>
+      </g>
+
+      <!-- ── NODE: MAP ── -->
+      <g class="node" style="animation-delay:0.4s">
+        <rect x="230" y="21" width="130" height="40" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
+        <rect x="230" y="21" width="4" height="40" rx="2" fill="rgba(201,135,123,0.5)"/>
+        <text x="246" y="38" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="rgba(201,135,123,0.7)">TRANSFORM</text>
+        <text x="246" y="53" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="rgba(255,255,255,0.45)">data.map(fn)</text>
+        <circle cx="230" cy="41" r="4" fill="rgba(26,25,24,0.9)" stroke="#c9877b" stroke-width="1.5"/>
+        <circle cx="360" cy="41" r="4.5" fill="#c9877b" stroke="#1a1918" stroke-width="2"/>
+      </g>
+
+      <!-- ── NODE: FILTER ── -->
+      <g class="node" style="animation-delay:0.5s">
+        <rect x="230" y="121" width="130" height="40" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
+        <rect x="230" y="121" width="4" height="40" rx="2" fill="rgba(201,135,123,0.5)"/>
+        <text x="246" y="138" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="rgba(201,135,123,0.7)">FILTER</text>
+        <text x="246" y="153" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="rgba(255,255,255,0.45)">if value &gt; n</text>
+        <circle cx="230" cy="141" r="4" fill="rgba(26,25,24,0.9)" stroke="#c9877b" stroke-width="1.5"/>
+        <circle cx="360" cy="141" r="4.5" fill="#c9877b" stroke="#1a1918" stroke-width="2"/>
+      </g>
+
+      <!-- ── NODE: MERGE ── -->
+      <g class="node" style="animation-delay:0.75s">
+        <rect x="430" y="71" width="130" height="40" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
+        <rect x="430" y="71" width="4" height="40" rx="2" fill="rgba(201,135,123,0.5)"/>
+        <text x="446" y="88" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="rgba(201,135,123,0.7)">COLLECT</text>
+        <text x="446" y="103" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="rgba(255,255,255,0.45)">merge(a, b)</text>
+        <circle cx="430" cy="91" r="4" fill="rgba(26,25,24,0.9)" stroke="#c9877b" stroke-width="1.5"/>
+        <circle cx="560" cy="91" r="4.5" fill="#c9877b" stroke="#1a1918" stroke-width="2"/>
+      </g>
+
+      <!-- ── NODE: OUTPUT ── -->
+      <g class="node" style="animation-delay:1.0s">
+        <rect x="630" y="71" width="112" height="40" rx="4" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
+        <rect x="630" y="71" width="4" height="40" rx="2" fill="rgba(201,135,123,0.5)"/>
+        <text x="646" y="88" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="9" letter-spacing="2" fill="rgba(201,135,123,0.7)">OUTPUT</text>
+        <text x="646" y="103" font-family="'JetBrains Mono', monospace" font-size="10.5" fill="rgba(255,255,255,0.45)">emit.result</text>
+        <circle cx="630" cy="91" r="4" fill="rgba(26,25,24,0.9)" stroke="#c9877b" stroke-width="1.5"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <!-- NEWSLETTER -->
+  <div class="notify-wrap">
+    <div class="notify-label">Get notified at launch</div>
+    <form
+      action="https://buttondown.com/api/emails/embed-subscribe/latticeworks-studio"
+      method="post"
+      class="embeddable-buttondown-form"
+    >
+      <label for="bd-email">Enter your email</label>
+      <input type="email" name="email" id="bd-email" placeholder="your@email.com"/>
+      <input type="submit" value="Notify Me →"/>
+      <p>
+        <a href="https://buttondown.com/refer/latticeworks-studio" target="_blank" rel="noopener">Powered by Buttondown.</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+<!-- TEASERS -->
+<section class="teasers">
+  <div class="section-label">What's Coming</div>
+  <div class="teasers-grid">
+
+    <div class="teaser-card">
+      <div class="teaser-icon">{ }</div>
+      <div class="teaser-name">Node canvas</div>
+      <div class="teaser-desc">Build logic visually by connecting nodes on an infinite canvas. If you can think it you can visualize it.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">&gt;_</div>
+      <div class="teaser-name">FlowBar commands</div>
+      <div class="teaser-desc">A command palette built into the canvas. Spawn nodes, search connections, and navigate your flow without touching the mouse.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">⌥</div>
+      <div class="teaser-name">Code & Graph View</div>
+      <div class="teaser-desc">Code your graph in a simplified scripting language or design it visually — both views are seamless and live, so power users can move at full speed.</div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="../about.html">About</a> &nbsp;·&nbsp; <a href="../contact.html">Contact</a></p>
+</footer>
+
+</body>
+</html>
