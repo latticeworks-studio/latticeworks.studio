@@ -1,8 +1,16 @@
 {
-  "version": "0.3.17",
-  "date": "2026-06-06",
-  "notes": "Ghost node preview while dragging edges, proximity-aware pin detection, drop-to-create nodes, Check for Updates.",
+  "version": "0.7.7",
+  "date": "2026-09-29",
+  "notes": "Early Access. Quest editor: Min Reputation, per-step-type fields, Skill rewards and quests that start themselves.",
   "downloads": {
-    "desktop": "https://github.com/YOUR_ORG/flowscript-releases/releases/download/v0.3.17/FlowScript-Setup-0.3.17.exe"
+    "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.7/FlowScript.Setup.0.7.7.exe"
+  },
+  "frame": {
+    "version": "0.7.7",
+    "date": "2026-09-29",
+    "notes": "First FlowScript.frame Early Access build. Electrolaser and RotaryCannon cores, Thermal Sensor as a Blade Chassis module, defense nodes and pins matching the game.",
+    "downloads": {
+      "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.7/FlowScript.frame.Setup.0.7.7.exe"
+    }
   }
 }
