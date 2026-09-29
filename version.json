@@ -1,9 +1,9 @@
 {
-  "version": "0.7.7",
+  "version": "0.7.8",
   "date": "2026-09-29",
-  "notes": "Early Access. Quest editor: Min Reputation, per-step-type fields, Skill rewards and quests that start themselves.",
+  "notes": "Early Access. Fixes notes being duplicated when switching to CODE and back.",
   "downloads": {
-    "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.7/FlowScript.Setup.0.7.7.exe"
+    "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.8/FlowScript.Setup.0.7.8.exe"
   },
   "frame": {
     "version": "0.7.7",
