@@ -239,7 +239,7 @@ nav {
 /* ── TEASERS ── */
 .teasers {
   position: relative; z-index: 1;
-  padding: 80px 48px 120px;
+  padding: 80px 48px 100px;
   max-width: 1100px; margin: 0 auto;
   border-top: 1px solid rgba(255,255,255,0.04);
 }
@@ -286,6 +286,86 @@ nav {
   color: var(--muted);
 }
 
+/* ── EARLY ACCESS DOWNLOAD ── */
+.ea-download {
+  width: 100%; max-width: 520px;
+  border: 1px dashed rgba(201,135,123,0.35);
+  background: rgba(201,135,123,0.03);
+  padding: 28px 28px 22px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  animation: fadeUp 0.7s 0.5s ease both;
+}
+.ea-build {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px;
+}
+.ea-build b { color: var(--amber); font-weight: 600; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--amber); color: var(--navy);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 14px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 16px 40px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.ea-links {
+  display: flex; flex-wrap: wrap; justify-content: center; row-gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.ea-links a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+.ea-links a:hover { color: var(--amber); }
+.ea-links span { color: rgba(255,255,255,0.12); margin: 0 10px; }
+.ea-note {
+  font-size: 12px; font-weight: 300; line-height: 1.6;
+  color: rgba(255,255,255,0.28); text-align: center;
+}
+
+/* ── EARLY ACCESS INFO ── */
+.ea-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+}
+.ea-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.ea-card h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
+  color: #fff; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.ea-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ea-card li {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+  padding-left: 18px; position: relative;
+}
+.ea-card li::before {
+  content: '›'; position: absolute; left: 0; color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+}
+.ea-card a { color: var(--amber); text-decoration: none; }
+.ea-card a:hover { text-decoration: underline; }
+.teaser-tag {
+  align-self: flex-start;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.25em;
+  color: var(--amber); text-transform: uppercase;
+  border: 1px solid rgba(201,135,123,0.35);
+  padding: 3px 8px;
+}
+.notify-section {
+  position: relative; z-index: 1;
+  padding: 0 48px 120px;
+  display: flex; justify-content: center;
+}
+
 /* ── FOOTER ── */
 footer {
   position: relative; z-index: 1;
@@ -307,10 +387,13 @@ footer a:hover { color: var(--amber); }
   .hero { padding: 100px 24px 60px; }
   .teasers { padding: 60px 24px 80px; }
   .teasers-grid { grid-template-columns: 1fr 1fr; }
+  .notify-section { padding: 0 24px 80px; }
 }
 @media (max-width: 600px) {
-  .teasers-grid { grid-template-columns: 1fr; }
+  .teasers-grid, .ea-grid { grid-template-columns: 1fr; }
   .nav-links { gap: 18px; }
+  .ea-download { padding: 24px 16px 18px; }
+  .btn-primary { padding: 16px 24px; }
 }
 </style>
 
@@ -322,16 +405,16 @@ footer a:hover { color: var(--amber); }
 <meta property="og:type"         content="website">
 <meta property="og:site_name"    content="LatticeWorks Studio">
 <meta property="og:title"        content="FlowScript — LatticeWorks Studio">
-<meta property="og:description"  content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+<meta property="og:description"  content="A node editor for putting down any logic or flow you can think of. Early Access — free to download for Windows.">
 <meta property="og:url"          content="https://latticeworks.studio/products/flowscript.html">
 <meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
 <meta property="og:image:width"  content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="FlowScript — LatticeWorks Studio">
-<meta name="twitter:description" content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+<meta name="twitter:description" content="A node editor for putting down any logic or flow you can think of. Early Access — free to download for Windows.">
 <meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
-<meta name="description"         content="A powerful node editor for putting down any logic or flow you can think of. Coming soon.">
+<meta name="description"         content="A node editor for putting down any logic or flow you can think of. Early Access — free to download for Windows.">
 </head>
 <body>
 
@@ -377,10 +460,11 @@ footer a:hover { color: var(--amber); }
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-eyebrow">Coming Soon</div>
+  <div class="hero-eyebrow">Early Access</div>
   <h1 class="hero-title">FlowScript</h1>
   <p class="hero-subtitle">
-    A powerful node editor for putting down any logic or flow you can think of — without getting in your way.
+    A node editor for putting down any logic or flow you can think of — without getting in your way.
+    It's early, it's evolving, and you can use it today.
   </p>
 
   <!-- NODE GRAPH -->
@@ -488,9 +572,96 @@ footer a:hover { color: var(--amber); }
     </svg>
   </div>
 
-  <!-- NEWSLETTER -->
+  <!-- DOWNLOAD -->
+  <div class="ea-download">
+    <div class="ea-build">
+      <span><b>v0.7.7</b></span><span>Early Access build</span><span>Windows 10 / 11 · 64-bit</span><span>Free</span>
+    </div>
+    <a href="https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.7/FlowScript.Setup.0.7.7.exe" class="btn-primary">Download FlowScript ↓</a>
+    <div class="ea-links">
+      <a href="https://github.com/latticeworks-studio/flowscript_releases/releases" target="_blank" rel="noopener">All builds</a><span>·</span><a href="../docs/flowscript/index.html">Docs</a><span>·</span><a href="#early-access">What Early Access means</a>
+    </div>
+    <p class="ea-note">Windows may show a SmartScreen prompt for a new installer — choose <em>More info → Run anyway</em>.</p>
+  </div>
+</div>
+
+<!-- IN THIS BUILD -->
+<section class="teasers">
+  <div class="section-label">In This Build</div>
+  <div class="teasers-grid">
+
+    <div class="teaser-card">
+      <div class="teaser-icon">{ }</div>
+      <div class="teaser-name">Node canvas</div>
+      <div class="teaser-desc">Build logic visually by connecting nodes on an infinite canvas. Group nodes into sub-graphs, lock what's finished, and batch-connect many nodes in one drag.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">&gt;_</div>
+      <div class="teaser-name">FlowBar commands</div>
+      <div class="teaser-desc">A command bar built into the canvas. Spawn nodes, search, and navigate your flow without reaching for the mouse.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">⌥</div>
+      <div class="teaser-name">Code &amp; Graph view</div>
+      <div class="teaser-desc">Write your graph in a simple scripting language or design it visually. Both views stay in sync, so you can switch whenever it suits you.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">▶</div>
+      <div class="teaser-name">Execute mode</div>
+      <div class="teaser-desc">Step through a flow node by node, forward and back, and watch the signal travel along each edge.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-icon">“ ”</div>
+      <div class="teaser-name">Dialogue editor</div>
+      <div class="teaser-desc">Branching conversations as <code>.dialogue</code> files: speakers, choices and conditions laid out as a graph you can read at a glance.</div>
+    </div>
+
+    <div class="teaser-card">
+      <div class="teaser-tag">New in 0.7.7</div>
+      <div class="teaser-icon">!</div>
+      <div class="teaser-name">Quest editor</div>
+      <div class="teaser-desc">Design <code>.quest</code> files with steps, rewards and requirements, including minimum reputation, skill rewards and quests that start themselves.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EARLY ACCESS -->
+<section class="teasers" id="early-access">
+  <div class="section-label">Early Access</div>
+  <div class="ea-grid">
+
+    <div class="ea-card">
+      <h3>What to expect</h3>
+      <ul>
+        <li>FlowScript is usable today, but it's still being built. Expect rough edges, missing polish and the occasional bug.</li>
+        <li>Features can change between builds as they get refined, so keep backups of files you care about.</li>
+        <li>New builds land often. FlowScript checks for updates and tells you when one is out.</li>
+        <li>Early Access builds are free to download and use.</li>
+      </ul>
+    </div>
+
+    <div class="ea-card">
+      <h3>Help shape it</h3>
+      <ul>
+        <li>Found a bug or something that feels wrong? <a href="../contact.html">Tell us</a>. Early Access feedback decides what gets fixed first.</li>
+        <li>Ideas for nodes, file types or workflows are welcome too.</li>
+        <li>New to FlowScript? The tutorial opens on first launch, QuickStart is in the Help menu, and the <a href="../docs/flowscript/index.html">docs</a> cover the rest.</li>
+        <li>Paid licenses arrive with version 1.0. Until then, Early Access is how FlowScript gets tested in the real world.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="notify-section">
   <div class="notify-wrap">
-    <div class="notify-label">Get notified at launch</div>
+    <div class="notify-label">Get notified about new builds</div>
     <form
       action="https://buttondown.com/api/emails/embed-subscribe/latticeworks-studio"
       method="post"
@@ -498,37 +669,11 @@ footer a:hover { color: var(--amber); }
     >
       <label for="bd-email">Enter your email</label>
       <input type="email" name="email" id="bd-email" placeholder="your@email.com"/>
-      <input type="submit" value="Notify Me →"/>
+      <input type="submit" value="Keep Me Posted →"/>
       <p>
         <a href="https://buttondown.com/refer/latticeworks-studio" target="_blank" rel="noopener">Powered by Buttondown.</a>
       </p>
     </form>
-  </div>
-</div>
-
-<!-- TEASERS -->
-<section class="teasers">
-  <div class="section-label">What's Coming</div>
-  <div class="teasers-grid">
-
-    <div class="teaser-card">
-      <div class="teaser-icon">{ }</div>
-      <div class="teaser-name">Node canvas</div>
-      <div class="teaser-desc">Build logic visually by connecting nodes on an infinite canvas. If you can think it you can visualize it.</div>
-    </div>
-
-    <div class="teaser-card">
-      <div class="teaser-icon">&gt;_</div>
-      <div class="teaser-name">FlowBar commands</div>
-      <div class="teaser-desc">A command palette built into the canvas. Spawn nodes, search connections, and navigate your flow without touching the mouse.</div>
-    </div>
-
-    <div class="teaser-card">
-      <div class="teaser-icon">⌥</div>
-      <div class="teaser-name">Code & Graph View</div>
-      <div class="teaser-desc">Code your graph in a simplified scripting language or design it visually — both views are seamless and live, so power users can move at full speed.</div>
-    </div>
-
   </div>
 </section>
 
