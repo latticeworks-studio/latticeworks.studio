@@ -325,6 +325,12 @@ nav {
   color: rgba(255,255,255,0.28); text-align: center;
 }
 
+.peerpush-badge {
+  display: block; margin-top: 28px;
+  animation: fadeUp 0.7s 0.6s ease both;
+}
+.peerpush-badge img { display: block; max-width: 100%; height: auto; }
+
 /* ── EARLY ACCESS INFO ── */
 .ea-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
@@ -583,6 +589,11 @@ footer a:hover { color: var(--amber); }
     </div>
     <p class="ea-note">Windows may show a SmartScreen prompt for a new installer — choose <em>More info → Run anyway</em>.</p>
   </div>
+
+  <!-- PEERPUSH BADGE -->
+  <a href="https://peerpush.com/p/flowscript" class="peerpush-badge" target="_blank" rel="noopener">
+    <img src="https://peerpush.com/p/flowscript/badge.png" alt="FlowScript on PeerPush" style="width: 230px;"/>
+  </a>
 </div>
 
 <!-- IN THIS BUILD -->
