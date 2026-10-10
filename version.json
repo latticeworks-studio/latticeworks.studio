@@ -1,9 +1,9 @@
 {
-  "version": "0.7.9",
-  "date": "2026-10-01",
-  "notes": "Early Access. Quest editor: Loot Crate spawners show the item they hold, and Find Item steps drop Target Count.",
+  "version": "0.8.0",
+  "date": "2026-10-10",
+  "notes": "Early Access. Export a flow as TypeScript or JavaScript (File > Export > as Code). Quest editor: Unlock reward and Transport step.",
   "downloads": {
-    "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.7.9/FlowScript.Setup.0.7.9.exe"
+    "desktop": "https://github.com/latticeworks-studio/flowscript_releases/releases/download/v0.8.0/FlowScript.Setup.0.8.0.exe"
   },
   "frame": {
     "version": "0.7.7",
