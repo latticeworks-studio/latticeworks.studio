@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brut3D — LatticeWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@400;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy:   #1a1918;
+  --amber:  #c9877b;
+  --muted:  rgba(255,255,255,0.45);
+  --faint:  rgba(255,255,255,0.06);
+  --grid:   rgba(255,255,255,0.025);
+}
+
+body {
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(26,25,24,0.97) 0%, transparent 100%);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+}
+
+.nav-logo-svg { width: 36px; height: 36px; }
+
+.nav-brand {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 17px; letter-spacing: 0.12em; color: #fff; line-height: 1;
+}
+
+.nav-brand span {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 9px; letter-spacing: 0.35em;
+  color: var(--amber); margin-top: 2px;
+}
+
+.nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+.nav-links a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: var(--muted); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #fff; }
+.nav-links a.active { color: var(--amber); }
+
+.nav-dropdown { position: relative; }
+.nav-dropdown > a { display: inline-flex; align-items: center; gap: 6px; }
+.nav-dropdown > a::after { content: '▾'; font-size: 11px; }
+.dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 14px); right: 0;
+  background: rgba(26,25,24,0.97);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  min-width: 160px;
+  padding: 6px 0;
+  z-index: 101;
+  list-style: none;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu { display: block; }
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -14px; left: 0; right: 0;
+  height: 14px;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 9px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.45); text-decoration: none; text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+}
+.dropdown-menu a:hover { color: #fff; background: rgba(255,255,255,0.04); }
+
+/* ── PRODUCT HERO ── */
+.product-hero {
+  position: relative; z-index: 1;
+  padding: 160px 48px 80px;
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-eyebrow::before {
+  content: ''; width: 24px; height: 1px;
+  background: var(--amber);
+}
+
+.hero-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: clamp(36px, 5vw, 58px);
+  letter-spacing: 0.06em; line-height: 1.05;
+  color: #fff;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.hero-tagline {
+  margin-top: 14px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 18px; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.8); text-transform: uppercase;
+  animation: fadeUp 0.7s 0.15s ease both;
+}
+
+.hero-subtitle {
+  margin-top: 20px;
+  font-size: 16px; font-weight: 300; line-height: 1.75;
+  color: var(--muted);
+  max-width: 440px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-cta {
+  margin-top: 36px;
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+
+.coming-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(201,135,123,0.3);
+  color: var(--amber);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 12px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+}
+
+.coming-badge::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--muted);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 11px 22px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+/* ── VOXEL ILLUSTRATION ── */
+.mockup-wrap {
+  position: relative;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.voxel-stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%; max-width: 460px;
+  margin: 0 auto;
+  border: 1px solid rgba(255,255,255,0.05);
+  background:
+    radial-gradient(circle at 50% 55%, rgba(201,135,123,0.08), transparent 65%),
+    rgba(255,255,255,0.015);
+}
+
+.voxel-stage svg { display: block; width: 100%; height: 100%; }
+
+.stage-step {
+  position: absolute; left: 18px; bottom: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; letter-spacing: 0.08em;
+  color: var(--amber);
+}
+
+.stage-step b { color: rgba(255,255,255,0.3); font-weight: 400; margin-right: 8px; }
+
+.stage-corner {
+  position: absolute; right: 18px; top: 16px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 10px; letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+
+.vx { transition: transform 0.9s cubic-bezier(.5,0,.2,1), opacity 0.25s ease; }
+.wire { transition: opacity 0.6s ease; }
+
+/* ── SECTIONS ── */
+.section {
+  position: relative; z-index: 1;
+  padding: 0 48px 100px;
+  max-width: 1100px; margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.4em;
+  color: var(--amber); text-transform: uppercase;
+  margin-bottom: 48px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(to right, rgba(201,135,123,0.4), transparent);
+}
+
+.pitch {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: start;
+}
+
+.pitch-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 28px; letter-spacing: 0.05em; line-height: 1.2;
+}
+
+.pitch-title em { font-style: normal; color: var(--amber); }
+
+.pitch-body {
+  font-size: 15px; font-weight: 300; line-height: 1.8;
+  color: var(--muted);
+}
+
+.pitch-body p + p { margin-top: 14px; }
+
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.feature-card {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; gap: 12px;
+  transition: background 0.2s;
+}
+
+.feature-card:hover { background: rgba(201,135,123,0.04); }
+
+.feature-icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px; line-height: 1;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+
+.feature-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 16px; letter-spacing: 0.08em;
+  color: #fff; text-transform: uppercase;
+}
+
+.feature-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+.feature-tag {
+  margin-top: auto; padding-top: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.15em;
+  color: var(--amber); text-transform: uppercase;
+}
+
+/* ── HOW IT WORKS ── */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.step-card {
+  padding: 36px 28px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.step-number {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 48px; letter-spacing: 0.06em;
+  color: rgba(201,135,123,0.15);
+  line-height: 1;
+}
+
+.step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 15px; letter-spacing: 0.1em;
+  color: #fff; text-transform: uppercase;
+}
+
+.step-desc {
+  font-size: 13px; font-weight: 300; line-height: 1.65;
+  color: var(--muted);
+}
+
+.step-detail {
+  margin-top: auto;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.15em;
+  color: var(--amber); text-transform: uppercase;
+}
+
+/* ── NEWSLETTER ── */
+.notify-section {
+  position: relative; z-index: 1;
+  padding: 0 48px 120px;
+  max-width: 680px; margin: 0 auto;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+
+.notify-title {
+  font-family: 'Bakbak One', sans-serif;
+  font-size: 28px; letter-spacing: 0.06em;
+  color: #fff;
+}
+
+.notify-desc {
+  font-size: 14px; font-weight: 300; line-height: 1.75;
+  color: var(--muted); max-width: 440px;
+}
+
+.notify-wrap {
+  width: 100%; max-width: 440px;
+  margin-top: 8px;
+}
+
+.notify-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 10px; letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.22); text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.embeddable-buttondown-form {
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.embeddable-buttondown-form label { display: none; }
+
+.embeddable-buttondown-form input[type="email"] {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px; font-weight: 300;
+  padding: 14px 18px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+.embeddable-buttondown-form input[type="email"]::placeholder {
+  color: rgba(255,255,255,0.18);
+}
+.embeddable-buttondown-form input[type="email"]:focus {
+  border-color: rgba(201,135,123,0.45);
+}
+
+.embeddable-buttondown-form input[type="submit"] {
+  background: var(--amber);
+  color: var(--navy);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 13px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none; padding: 14px 28px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.embeddable-buttondown-form input[type="submit"]:hover {
+  opacity: 0.88; transform: translateY(-1px);
+}
+
+.embeddable-buttondown-form p {
+  font-size: 11px; color: rgba(255,255,255,0.1);
+  text-align: center; margin-top: 6px;
+}
+.embeddable-buttondown-form p a {
+  color: rgba(255,255,255,0.1); text-decoration: none;
+}
+.embeddable-buttondown-form p a:hover { color: rgba(255,255,255,0.28); }
+
+.download-meta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 11px; color: rgba(255,255,255,0.12);
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+footer a { color: rgba(255,255,255,0.25); text-decoration: none; }
+footer a:hover { color: var(--amber); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 900px) {
+  .product-hero { grid-template-columns: 1fr; gap: 48px; padding: 120px 24px 60px; }
+  .pitch { grid-template-columns: 1fr; gap: 24px; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  nav { padding: 16px 24px; }
+  .section, .notify-section { padding-left: 24px; padding-right: 24px; }
+}
+
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 18px; }
+}
+</style>
+
+<!-- ── FAVICON ── -->
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<!-- ── OPEN GRAPH / SOCIAL ── -->
+<meta property="og:type"         content="website">
+<meta property="og:site_name"    content="LatticeWorks Studio">
+<meta property="og:title"        content="Brut3D — LatticeWorks Studio">
+<meta property="og:description"  content="Coming soon: block out a model in 3D, voxelize it, paint it and export it for your game, all in one app.">
+<meta property="og:url"          content="https://latticeworks.studio/products/brut3d.html">
+<meta property="og:image"        content="https://latticeworks.studio/assets/og-image.png">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Brut3D — LatticeWorks Studio">
+<meta name="twitter:description" content="Coming soon: block out a model in 3D, voxelize it, paint it and export it for your game, all in one app.">
+<meta name="twitter:image"       content="https://latticeworks.studio/assets/og-image.png">
+<meta name="description"         content="Coming soon: block out a model in 3D, voxelize it, paint it and export it for your game, all in one app.">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(18,18) rotate(45)">
+        <rect x="-13" y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="-13" width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-7"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-7"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="-1"  y="-1"  width="5" height="5" rx="0.5" fill="#fff"/>
+        <rect x="5"   y="-1"  width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-13" y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-7"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="-1"  y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+        <rect x="5"   y="5"   width="5" height="5" rx="0.5" fill="#c9877b"/>
+      </g>
+    </svg>
+    <div class="nav-brand">
+      LATTICEWORKS
+      <span>S T U D I O</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li class="nav-dropdown">
+      <a href="#" class="active">Products</a>
+      <ul class="dropdown-menu">
+        <li><a href="assistask-manager-2.html">Assistask</a></li>
+        <li><a href="latticecolor.html">LatticeColor</a></li>
+        <li><a href="flowscript.html">FlowScript</a></li>
+        <li><a href="brut3d.html">Brut3D</a></li>
+      </ul>
+    </li>
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../docs/index.html">Docs</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- PRODUCT HERO -->
+<div class="product-hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">In Development</div>
+    <h1 class="hero-title">Brut3D</h1>
+    <div class="hero-tagline">From blockout to game-ready voxels</div>
+    <p class="hero-subtitle">
+      Rough out a model with simple 3D shapes, turn it into voxels with one click, then paint it, split it into parts and export it for your game. You don't need to jump between a modeller and a voxel editor.
+    </p>
+    <div class="hero-cta">
+      <span class="coming-badge">Coming Soon</span>
+      <a href="#notify" class="btn-secondary">Get Notified →</a>
+    </div>
+  </div>
+
+  <div class="mockup-wrap">
+    <div class="voxel-stage" role="img" aria-label="A blocky walker model drawn as 3D boxes, filled in with voxels, then split into separate parts">
+      <svg id="voxel-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+      <div class="stage-corner">Brut3D</div>
+      <div class="stage-step" id="stage-step"><b>01</b>Block out</div>
+    </div>
+  </div>
+</div>
+
+<!-- PITCH -->
+<section class="section">
+  <div class="section-label">Why Brut3D</div>
+  <div class="pitch">
+    <div class="pitch-title">Voxel art usually starts from <em>an empty grid.</em> Brut3D starts from a shape.</div>
+    <div class="pitch-body">
+      <p>Most voxel editors make you build every model a voxel at a time. Getting the proportions right before any detail goes in means either a lot of patience or a round trip through a separate 3D package.</p>
+      <p>Brut3D puts both halves in one app. You block out the form with real 3D tools, voxelize it, then switch straight to painting and detailing. When it's done, it exports in the format your game engine already reads.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">Key Features</div>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">◧</div>
+      <div class="feature-name">Block out in 3D</div>
+      <div class="feature-desc">Start from primitives and shape them with move, rotate and scale, face extrudes, edge moves, and union, subtract and intersect. Snap vertices together to line parts up.</div>
+      <div class="feature-tag">Modelling</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">▦</div>
+      <div class="feature-name">One-click voxelize</div>
+      <div class="feature-desc">Turn the blockout into voxels at the resolution you choose. Or skip the 3D step and start from an empty grid.</div>
+      <div class="feature-tag">3D → Voxels</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">✥</div>
+      <div class="feature-name">Voxel editing</div>
+      <div class="feature-desc">Place, erase, box-select and use the shape brush, with mirror mode for symmetric models. Layers keep pieces separate. Hide voxels or cut through with a clipping plane to work inside the model.</div>
+      <div class="feature-tag">Edit</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">◐</div>
+      <div class="feature-name">Palette painting</div>
+      <div class="feature-desc">Use a 256-colour palette with paint, plane fill and colour replace tools. Colour noise breaks up flat surfaces. Erode, Dilate and Scatter effects add wear, and Colorize retints a whole model while keeping its shading.</div>
+      <div class="feature-tag">Paint</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⧉</div>
+      <div class="feature-name">Part Split</div>
+      <div class="feature-desc">Paint which voxels belong to which part, such as torso, arms or legs. Brut3D works out the seams and exports one file per part. Each part's pivot sits where it joins its parent, so the parts are ready to animate.</div>
+      <div class="feature-tag">Characters &amp; rigs</div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⇲</div>
+      <div class="feature-name">Engine-ready export</div>
+      <div class="feature-desc">Export MagicaVoxel-compatible .vox files with the palette, pivot and named markers included. You can also export OBJ for other tools and STL for 3D printing.</div>
+      <div class="feature-tag">.vox · OBJ · STL</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-label">How It Works</div>
+  <div class="steps-grid">
+
+    <div class="step-card">
+      <div class="step-number">01</div>
+      <div class="step-title">Block it out</div>
+      <div class="step-desc">Rough out the silhouette with boxes, cylinders and booleans. At this stage proportions matter more than detail.</div>
+      <div class="step-detail">3D mode</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">02</div>
+      <div class="step-title">Voxelize</div>
+      <div class="step-desc">Choose a voxel size and convert. The shape you built becomes a solid voxel model you can edit voxel by voxel.</div>
+      <div class="step-detail">One click</div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-number">03</div>
+      <div class="step-title">Paint, split, export</div>
+      <div class="step-desc">Paint and detail the model. Split it into parts if it needs to move, then export it to your game engine.</div>
+      <div class="step-detail">Voxel mode → .vox</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="notify" class="notify-section">
+  <div class="section-label" style="justify-content:center;">Stay Posted</div>
+  <div class="notify-title">Brut3D is on its way</div>
+  <p class="notify-desc">Brut3D is in active development. Leave your email to hear when the first build is ready to try.</p>
+  <div class="notify-wrap">
+    <div class="notify-label">Get notified when Brut3D launches</div>
+    <form
+      action="https://buttondown.com/api/emails/embed-subscribe/latticeworks-studio"
+      method="post"
+      class="embeddable-buttondown-form"
+    >
+      <label for="bd-email">Enter your email</label>
+      <input type="email" name="email" id="bd-email" placeholder="your@email.com" required/>
+      <input type="submit" value="Keep Me Posted →"/>
+      <p>
+        <a href="https://buttondown.com/refer/latticeworks-studio" target="_blank" rel="noopener">Powered by Buttondown.</a>
+      </p>
+    </form>
+  </div>
+  <p class="download-meta">Windows 10 / 11 &nbsp;·&nbsp; 64-bit</p>
+</section>
+
+<footer>
+  <p>© 2026 LATTICEWORKS STUDIO &nbsp;·&nbsp; <a href="../index.html">Home</a> &nbsp;·&nbsp; <a href="../about.html">About</a> &nbsp;·&nbsp; <a href="../contact.html">Contact</a></p>
+</footer>
+
+<script>
+// Hero illustration: the Brut3D pipeline on a loop. A walker is blocked out as boxes,
+// filled with voxels layer by layer, then split into parts and put back together.
+(function () {
+  const svg = document.getElementById('voxel-svg');
+  const stepEl = document.getElementById('stage-step');
+  const NS = 'http://www.w3.org/2000/svg';
+  const S = 13;                         // voxel edge on screen
+  const A = S * 0.866, B = S * 0.5;     // isometric x / y step
+  const OX = 200, OY = 318;             // screen position of the grid origin
+
+  // Each part is a box: [x0, y0, z0, x1, y1, z1] inclusive, with a base colour and the
+  // direction it moves when the model is split.
+  const PARTS = [
+    { name: 'l_leg',  boxes: [[2,0,1, 4,1,5], [2,2,2, 4,6,4]],        color: [92,86,82],    split: [-1.6, 0, 1.2] },
+    { name: 'r_leg',  boxes: [[8,0,1, 10,1,5], [8,2,2, 10,6,4]],      color: [92,86,82],    split: [1.6, 0, -1.2] },
+    { name: 'pelvis', boxes: [[2,7,1, 10,8,5]],                        color: [120,108,102], split: [0, 0.4, 0] },
+    { name: 'torso',  boxes: [[1,9,0, 11,13,6]],                       color: [201,135,123], split: [0, 1.6, 0] },
+    { name: 'l_arm',  boxes: [[-2,8,2, 0,12,4]],                       color: [170,110,100], split: [-2.2, 1.6, 0] },
+    { name: 'r_arm',  boxes: [[12,8,2, 14,12,4]],                      color: [170,110,100], split: [2.2, 1.6, 0] },
+    { name: 'head',   boxes: [[4,14,1, 8,16,5]],                       color: [201,135,123], split: [0, 3.4, 0] },
+  ];
+  // Centre the model on the origin so it sits in the middle of the stage.
+  const CX = 6, CZ = 3;
+
+  const iso = (x, y, z) => [OX + (x - z) * A, OY + (x + z) * B - y * S];
+  const pts = (arr) => arr.map(p => p.join(',')).join(' ');
+  const rgb = (c, k) => `rgb(${c.map(v => Math.min(255, Math.round(v * k))).join(',')})`;
+
+  // Voxels, with each one remembering its part. A visor on the head adds a highlight.
+  const filled = new Map();
+  PARTS.forEach((part, pi) => {
+    for (const [x0, y0, z0, x1, y1, z1] of part.boxes)
+      for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) {
+        let color = part.color;
+        if (part.name === 'head' && y === 15 && z === 5 && x >= 5 && x <= 7) color = [245,240,236];
+        if (part.name === 'torso' && z === 6 && y === 11 && (x === 3 || x === 9)) color = [245,240,236];
+        filled.set(`${x},${y},${z}`, { x: x - CX, y, z: z - CZ, pi, color });
+      }
+  });
+  // Faces are culled only against the same part, so a part that moves away in the split
+  // has no hole where its neighbour used to sit.
+  const has = (x, y, z, pi) => filled.get(`${x + CX},${y},${z + CZ}`)?.pi === pi;
+
+  // Back to front for the painter's algorithm; only faces with nothing in front are drawn.
+  const voxels = [...filled.values()].sort((a, b) => (a.x + a.y + a.z) - (b.x + b.y + b.z) || a.y - b.y);
+  const vxEls = [];
+  for (const v of voxels) {
+    const { x, y, z, pi } = v;
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'vx');
+    const faces = [];
+    if (!has(x, y + 1, z, pi)) faces.push([[iso(x, y+1, z), iso(x+1, y+1, z), iso(x+1, y+1, z+1), iso(x, y+1, z+1)], 1.18]);
+    if (!has(x, y, z + 1, pi)) faces.push([[iso(x, y, z+1), iso(x+1, y, z+1), iso(x+1, y+1, z+1), iso(x, y+1, z+1)], 0.92]);
+    if (!has(x + 1, y, z, pi)) faces.push([[iso(x+1, y, z), iso(x+1, y, z+1), iso(x+1, y+1, z+1), iso(x+1, y+1, z)], 0.68]);
+    if (!faces.length) continue;
+    for (const [poly, k] of faces) {
+      const p = document.createElementNS(NS, 'polygon');
+      p.setAttribute('points', pts(poly));
+      p.setAttribute('fill', rgb(v.color, k));
+      p.setAttribute('stroke', 'rgba(26,25,24,0.35)');
+      p.setAttribute('stroke-width', '0.6');
+      p.setAttribute('stroke-linejoin', 'round');
+      g.appendChild(p);
+    }
+    g.style.opacity = '0';
+    svg.appendChild(g);
+    vxEls.push({ g, v });
+  }
+
+  // Wireframe blockout: one outlined box per part box, drawn over the voxels.
+  const wire = document.createElementNS(NS, 'g');
+  wire.setAttribute('class', 'wire');
+  wire.setAttribute('fill', 'rgb(38,34,32)');
+  wire.setAttribute('stroke', '#c9877b');
+  wire.setAttribute('stroke-width', '1');
+  wire.setAttribute('stroke-linejoin', 'round');
+  // Back to front, with a solid fill, so nearer boxes hide the ones behind them.
+  const wireBoxes = PARTS.flatMap(part => part.boxes)
+    .sort((p, q) => (p[0] + p[1] + p[2]) - (q[0] + q[1] + q[2]));
+  for (const [x0, y0, z0, x1, y1, z1] of wireBoxes) {
+    const a = x0 - CX, b = y0, c = z0 - CZ, d = x1 + 1 - CX, e = y1 + 1, f = z1 + 1 - CZ;
+    const outline = [iso(a, b, f), iso(d, b, f), iso(d, b, c), iso(d, e, c), iso(a, e, c), iso(a, e, f)];
+    const p = document.createElementNS(NS, 'polygon');
+    p.setAttribute('points', pts(outline));
+    wire.appendChild(p);
+    const inner = document.createElementNS(NS, 'polyline');
+    inner.setAttribute('points', pts([iso(a, e, f), iso(d, e, f), iso(d, b, f)]));
+    inner.setAttribute('fill', 'none');
+    wire.appendChild(inner);
+    const inner2 = document.createElementNS(NS, 'line');
+    const [x1s, y1s] = iso(d, e, f), [x2s, y2s] = iso(d, e, c);
+    inner2.setAttribute('x1', x1s); inner2.setAttribute('y1', y1s);
+    inner2.setAttribute('x2', x2s); inner2.setAttribute('y2', y2s);
+    wire.appendChild(inner2);
+  }
+  svg.appendChild(wire);
+
+  const setStep = (n, label) => { stepEl.innerHTML = `<b>0${n}</b>${label}`; };
+  const showAll = () => vxEls.forEach(({ g }) => { g.style.opacity = '1'; g.style.transform = ''; });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    showAll();
+    wire.style.opacity = '0';
+    setStep(3, 'Paint, split, export');
+    return;
+  }
+
+  const timers = [];
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  const maxY = Math.max(...vxEls.map(e => e.v.y));
+
+  function cycle() {
+    timers.length = 0;
+    vxEls.forEach(({ g }) => { g.style.opacity = '0'; g.style.transform = ''; });
+    wire.style.opacity = '1';
+    setStep(1, 'Block out');
+
+    // Voxelize: fill bottom to top, one layer at a time.
+    at(1800, () => setStep(2, 'Voxelize'));
+    const LAYER = 90;
+    vxEls.forEach(({ g, v }) => at(1800 + v.y * LAYER, () => { g.style.opacity = '1'; }));
+    at(1800 + (maxY + 1) * LAYER + 200, () => { wire.style.opacity = '0'; });
+
+    // Part Split: move each part out along its direction, hold, then reassemble.
+    const SPLIT = 1800 + (maxY + 1) * LAYER + 1400;
+    at(SPLIT, () => {
+      setStep(3, 'Part split');
+      vxEls.forEach(({ g, v }) => {
+        const [dx, dy, dz] = PARTS[v.pi].split;
+        const [sx, sy] = iso(dx, dy, dz);
+        g.style.transform = `translate(${sx - OX}px, ${sy - OY}px)`;
+      });
+    });
+    at(SPLIT + 2600, () => { vxEls.forEach(({ g }) => { g.style.transform = ''; }); setStep(3, 'Export'); });
+    at(SPLIT + 4600, cycle);
+  }
+
+  // Run only while the stage is on screen.
+  let running = false;
+  const io = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !running) { running = true; cycle(); }
+    else if (!entry.isIntersecting && running) { running = false; timers.forEach(clearTimeout); showAll(); wire.style.opacity = '0'; }
+  });
+  io.observe(svg);
+})();
+</script>
+</body>
+</html>
